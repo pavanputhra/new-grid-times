@@ -10,7 +10,7 @@ import Button from '../Button';
 
 const Header = () => {
   return (
-    <header>
+    <Head>
       <SuperHeader>
         <Row>
           <ActionGroup>
@@ -21,24 +21,41 @@ const Header = () => {
               <Menu size={24} />
             </button>
           </ActionGroup>
-          <ActionGroup>
+          <ActionGroupDesktop>
+            <Button>Subscribe</Button>
+            <Anchor>Already a subscriber?</Anchor>
+          </ActionGroupDesktop>
+          <ActionGroupMobile>
             <button>
               <User size={24} />
             </button>
-          </ActionGroup>
+          </ActionGroupMobile>
         </Row>
       </SuperHeader>
       <MainHeader>
         <Logo />
       </MainHeader>
-    </header>
+    </Head>
   );
 };
+
+const Head = styled.header`
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+`;
 
 const SuperHeader = styled.div`
   padding: 16px 0;
   background: var(--color-gray-900);
   color: white;
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+  
+  @media ${QUERIES.laptopAndUp} {
+    background: var(--color-gray-100);
+    color: var(--color-gray-900);
+  }
 `;
 
 const Row = styled(MaxWidthWrapper)`
@@ -59,12 +76,38 @@ const ActionGroup = styled.div`
   }
 `;
 
+const ActionGroupMobile = styled(ActionGroup)`
+  @media ${QUERIES.desktopAndUp} {
+    display: none;
+  }
+`;
+
+const ActionGroupDesktop = styled.div`
+  display: none;
+  @media ${QUERIES.desktopAndUp} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+`;
+
+const Anchor = styled.a`
+  font-size: (14 /16)rem;
+`;
+
+
 const MainHeader = styled(MaxWidthWrapper)`
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 32px;
   margin-bottom: 48px;
+  
+  @media ${QUERIES.desktopAndUp} {
+    grid-row: 1 / -1;
+  }
 `;
 
 export default Header;
